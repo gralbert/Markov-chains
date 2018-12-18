@@ -3,6 +3,8 @@ Developers:
 Batenev P.A., Grigorev A.E., Dolgih N.A.
 """
 
+import random
+import string
 
 def file_read(txt_file):
     """ Read text from the file and return list. """
@@ -25,19 +27,39 @@ def text_preparation(text):
     return text
 
 
-def str_to_list():
-    """ Делит текст на слова и загоняет их в список. """
-    # TODO
+def dict_of_links(text_list):
+    """ Makes a dictionary of links from the list. """
+    d = {}
+    l = []
+    for i in range(len(text_list)-1):
+        if text_list[i] not in d:
+            for j in range(len(text_list)-1):
+                if text_list[i] == text_list[j]:
+                    l.append(text_list[j+1])
+            d.update({text_list[i]: l})
+        l = []
+    d.update({text_list[len(text_list) - 1]: []})
+    return d
 
 
-def list_to_dict():
-    """ Преобразует список из str_to_list в словарь звеньев и связей. """
-    # TODO
+def start_words(links):
+    """ Generates a list of starting words. """
+    start = []
+    words = links.keys()
+    for char in words:
+        if char[0] == char[0].upper() and not(char.find('.') + 1):
+            start.append(char)
+    return start
 
 
-def start_words():
-    """ Вытаскивает из списка str_to_list стартовые слова и загоняет их в отдельный список. """
-    # TODO
+def stop_words(links):
+    """ Generates a list of final words. """
+    stop = []
+    words = links.keys()
+    for char in words:
+        if char[-1] == '.':
+            stop.append(char)
+    return stop
 
 
 def text_generator():
