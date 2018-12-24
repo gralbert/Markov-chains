@@ -31,6 +31,7 @@ def text_preparation(text):
     text = text.replace(';', '')
     text = text.replace(' - ', ' ')
     text = text.replace(' — ', ' ')
+
     text = text.split()
     return text
 
@@ -38,14 +39,14 @@ def text_preparation(text):
 def dict_of_links(text_list):
     """ Makes dictionary of links from list. """
     _dict = {}
-    links = []
+    _links = []
     for i in range(len(text_list)-1):
         if text_list[i] not in _dict:
             for j in range(len(text_list)-1):
                 if text_list[i] == text_list[j]:
-                    links.append(text_list[j+1])
-            _dict.update({text_list[i]: links})
-        links = []
+                    _links.append(text_list[j+1])
+            _dict.update({text_list[i]: _links})
+        _links = []
     _dict.update({text_list[len(text_list) - 1]: []})
     return _dict
 
@@ -56,7 +57,8 @@ def start_words(links):
     words = links.keys()
     for char in words:
         if char[0] == char[0].upper() and \
-                not(char.find('.') + 1) and not char.isdigit():
+                not(char.find('.') + 1) and not char.isdigit() and\
+                not(char.find('!') + 1) and not(char.find('?') + 1):
             start.append(char)
     return start
 
